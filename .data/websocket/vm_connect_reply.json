@@ -1,0 +1,22 @@
+{
+    "method": "vm_connect_reply",
+    "code": 50017,
+    "data": {
+        "spice_password": "spice连接密码",
+        "server_user": "",
+        "server_passwd": "",
+        "user": "用户名",
+        "password": "密码",
+        "host_ip": "宿主机IP",
+        "port": 5900,
+        "vm_id": "",
+        "ip": "桌面IP",
+        "display_name": "显示的桌面名称",
+        "domain": "所属域",
+        "virtual_type": "桌面虚拟类型",
+        "protocol": "协议",
+        "usbdirect": "USB重定向",
+        "is_internet": false,
+        "toolbar_username": "安卓端toolbar专用的显示用户名"
+    }
+}

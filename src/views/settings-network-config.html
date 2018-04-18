@@ -1,0 +1,61 @@
+<div class="settings-pane network-config">
+    <!-- 标签页头部 -->
+    <!-- 网络设置包含网络设置和网络诊断，后面考虑两个模板分离 -->
+    <ul class="tab-switcher">
+        <li :class="{active: currentView === 1}" @click="currentView = 1">{{ _("网络设置") }}</li>
+        <li :class="{active: currentView === 2}" @click="currentView = 2">{{ _("网络诊断") }}</li>
+    </ul>
+    <div class="form-horizontal" v-show="currentView === 1">
+        <bs-slot-input v-if="isLinux" :labelText="_('client.connect-type')">
+            <bs-wire-type v-model="interfaceType" :labelText="_('type')"/>
+        </bs-slot-input>
+        <template v-if="interfaceType == '0'"><!-- 有线网络 -->
+            <!-- TODO: 此处代码从初始化代码复制过来，后面考虑封装成独立的组件 -->
+            <!-- linux, windows 独立版显示网卡 -->
+            <bs-slot-input v-if="isLinux || clientType === 999 || devices.length > 1" :labelText="_('本地网卡')">
+                <select class="form-control input-sm" v-model="device">
+                    <option v-for='name in devices' :value='name'>{{name}}</option>
+                </select>
+            </bs-slot-input>
+            <bs-net-type v-model="connectMethod" :labelText="_('网络连接')"/>
+            <bs-ip-input v-model="address" :disabled="connectMethod != '0'" :labelText="_('IP地址')"/>
+            <bs-ip-input v-model="mask" :disabled="connectMethod != '0'" :labelText="_('子网掩码')"/>
+            <bs-optional-ip-input v-model="gateway" :disabled="connectMethod != '0'" :labelText="_('网关')"/>
+            <bs-optional-ip-input v-model="dns1" :disabled="connectMethod != '0'" :labelText="_('首选DNS')"/>
+            <bs-optional-ip-input v-model="dns2" :disabled="connectMethod != '0'" :labelText="_('备用DNS')"/>
+            <p class="error-message text-center">{{ethernetError}}</p>
+        </template>
+        <template v-if="interfaceType == '1'"><!-- 无线网络 -->
+            <bs-slot-input :labelText="_('wifi list')">
+                <ul class="wifi-list"></ul>
+            </bs-slot-input>
+            <bs-password-input v-model="wifipassword" :labelText="_('password')"/>
+        </template>
+        <button class="btn btn-submit btn-default" :disabled="!canSubmit() || !isEthernetDirty()" @click="interfaceType == '0' ? saveEthernet() : saveWifi()">{{ _("保存") }}</button>
+    </div>
+    <div class="form-horizontal" v-show="currentView === 2">
+        <bs-ping-input v-model="pingAddress" :disabled="pinging" :labelText="_('地址')"/>
+        <bs-slot-input>
+            <div class="radio">
+                <label>
+                    <input type="radio" v-model="pingForever" :value="true" :disabled="pinging" checked>
+                    <span>{{ _("持续发送ping包") }}</span>
+                </label>
+            </div>
+            <div class="radio ping-custom" :class="{'disabled-input':pinging || pingForever, 'invalid-input': !lt1k(pingCount)}">
+                <label>
+                    <input type="radio" v-model="pingForever" :value="false" :disabled="pinging">
+                    <span>{{ _("自定义") }}</span>
+                </label>
+                <input type="text" v-number="'1-1000'" maxlength="4" v-model="pingCount" :disabled="pinging || pingForever" class="form-control input-sm" placeholder="1~1000" />
+            </div>
+        </bs-slot-input>
+        <div class="text-left">
+            <button class="btn btn-sm btn-primary" :disabled="pinging || !isIP(pingAddress) || (!pingForever && !lt1k(pingCount))" @click="startPing">ping</button>
+            <button class="btn btn-sm btn-default" :disabled="!pinging" @click="endPing">{{ _('取消') }}</button>
+        </div>
+        <div class="ping-result">
+            <textarea readonly :value="pingResult"></textarea>
+        </div>
+    </div>
+</div>

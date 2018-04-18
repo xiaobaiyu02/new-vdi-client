@@ -1,0 +1,8 @@
+<div class="settings-pane address-config">
+    <div class="form-horizontal">
+        <console-ip :labelText="_('服务器地址')" v-model="console_ip"/>
+        <console-port :labelText="_('端口')" v-model="console_port"/>
+        <p class="error-message text-center">{{error}}</p>
+        <button class="btn btn-default btn-submit" :disabled="!dirty || !checkAllValid()" @click="save">{{ _("保存") }}</button>
+    </div>
+</div>

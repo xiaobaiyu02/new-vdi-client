@@ -1,0 +1,40 @@
+{
+	"message": "",
+	"result": {
+		"vms": [{
+			"id": 922,
+			"image": {
+				"id": null,
+				"os_type": "Windows7_64"
+			},
+			"display_name": "PC1",
+			"mode_id": 143,
+			"power_status": null
+		}, {
+			"id": 924,
+			"image": {
+				"id": null,
+				"os_type": "Windows7_64"
+			},
+			"display_name": "PC1",
+			"mode_id": 144,
+			"power_status": null
+		}],
+		"modes": [{
+			"id": 143,
+			"order": 99999,
+			"status": "alive",
+			"is_auto": false,
+			"os_type": "Windows7_64",
+			"name": "Rony-Clf"
+		}, {
+			"id": 144,
+			"order": 99999,
+			"status": "alive",
+			"is_auto": false,
+			"os_type": "Windows7_64",
+			"name": "Rony-xfreerdp"
+		}]
+	},
+	"code": 0
+}

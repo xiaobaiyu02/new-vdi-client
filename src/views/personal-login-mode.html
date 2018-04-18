@@ -1,0 +1,92 @@
+<div class="personal-login-mode">
+    <div class="bar text-center">
+        <button v-if="isModifing ? true : showGoBack" class="go-back" @click="goback">
+            <i class="icon icon-arm-left"></i>
+        </button>
+        <span>{{ _("个人桌面登录") }}</span>
+    </div>
+    <div class="content">
+        <div v-if="!isModifing" class="user-login">
+            <!-- 这里可以是图片，现在是用字体充当图片 -->
+            <div class="fake-img">
+                <i class="icon icon-arm-user2"></i>
+            </div>
+            <!-- 用户名 -->
+            <div class="input-group">
+                <span class="input-group-addon icon-arm-user"></span>
+                <input autofocus type="text" class="form-control input-sm" minlength="2" v-model="username" maxlength="32" required="" placeholder="2 ~ 32 位字符"/>
+            </div>
+            <!-- 密码 -->
+            <div class="input-group" style="position: relative;">
+                <span class="input-group-addon icon-arm-password"></span>
+                <input autofocus type="password" class="form-control input-sm" minlength="1" v-model="password" maxlength="20" required="" placeholder="1 ~ 20 位字符" @keydown.enter="isModifing ? (canUpdate && updateUser()) : (canLogin && login())"/>
+                <a class="right-side" @click="isModifing = true; musername = username;">{{ _("修改密码") }}</a>
+            </div>
+            <!-- 复选框 -->
+            <div class="checkbox text-right">
+                <label class="checkbox-inline">
+                    <input type="checkbox" v-model="savePassword"/>
+                    <span>{{ _("保存密码") }}</span>
+                </label>
+                <label class="checkbox-inline">
+                    <input type="checkbox" v-model="autoLogin"/>
+                    <span>{{ _("自动登录") }}</span>
+                </label>
+            </div>
+        </div>
+        <div v-if="isModifing" class="user-modify-password form-horizontal">
+            <!-- 用户名 -->
+            <div class="form-group">
+                <label class="control-label col-xs-4">{{ _("用户名") }}</label>
+                <div class="col-xs-8">
+                    <input autofocus type="text" class="form-control input-sm"
+                        :class="{invalid: !isValid('musername')}"
+                        @input="markDirty('musername')"
+                        minlength="2" v-model="musername" maxlength="32"
+                        required="" placeholder="2 ~ 32 位字符"/>
+                </div>
+            </div>
+            <!-- 旧密码 -->
+            <div class="form-group">
+                <label class="control-label col-xs-4">{{ _("旧密码") }}</label>
+                <div class="col-xs-8">
+                    <input type="password" class="form-control input-sm"
+                        :class="{invalid: !isValid('mpassword')}"
+                        @input="markDirty('mpassword')"
+                        minlength="6" v-model="mpassword" maxlength="20"
+                        required="" placeholder="6 ~ 20 位字符"/>
+                </div>
+            </div>
+            <!-- 新密码 -->
+            <div class="form-group">
+                <label class="control-label col-xs-4">{{ _("新密码") }}</label>
+                <div class="col-xs-8">
+                    <input type="password" class="form-control input-sm"
+                    :class="{invalid: !isValid('mpassword1')}"
+                    @input="markDirty('mpassword1')"
+                    minlength="6" v-model="mpassword1" maxlength="20"
+                    required="" placeholder="6 ~ 20 位字符"/>
+                </div>
+            </div>
+            <!-- 确认密码 -->
+            <div class="form-group">
+                <label class="control-label col-xs-4">{{ _("确认密码") }}</label>
+                <div class="col-xs-8">
+                    <input type="password" class="form-control input-sm"
+                        :class="{invalid: !isValid('mpassword2')}"
+                        @input="markDirty('mpassword2')"
+                        minlength="6" v-model="mpassword2" maxlength="20"
+                        required="" placeholder="6 ~ 20 位字符"/>
+                </div>
+            </div>
+            <!-- 错误消息 -->
+            <p class="error-message">{{ getError() || error }}</p>
+        </div>
+        <a  class="user-submit"
+            :class="{active: isModifing ? canUpdate : canLogin}"
+            :disabled="!(isModifing ? canUpdate : canLogin)"
+            @click="isModifing ? (canUpdate && updateUser()) : (canLogin && login())">
+            <i class="icon icon-arm-right"></i>
+        </a>
+    </div>
+</div>

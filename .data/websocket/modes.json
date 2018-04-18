@@ -1,0 +1,17 @@
+{
+    "code": 50013,
+    "data|8-20": [
+      {
+        "id|+1": 403,
+        "image": {
+          "id": null,
+          "os_type|1": ["ArchLinux","ArchLinux_64","Debian","Debian_64","Fedora","Fedora_64","FreeBSD","FreeBSD_64","Gentoo","Gentoo_64","Linux","MacOS","MacOS_64","OpenBSD","OpenBSD_64","OpenSUSE","OpenSUSE_64","OpenSolaris","OpenSolaris_64","Oracle","Oracle_64","Other","RedHat","RedHat_64","Solaris","Solaris_64","Ubuntu","Ubuntu_64","Windows2000","Windows2003","Windows2003_64","Windows2008","Windows2008_64","Windows7","Windows7_64","Windows8","Windows8_64","WindowsNT","WindowsNT4","WindowsVista","WindowsVista_64","Windowsxp","Windowsxp_64","WindowsXP","WindowsXP_64","Windows 7","Windows10","Windows10_64"]
+        },
+        "display_name": "@cword(8,16)",
+        "mode_id": null,
+        "host": null,
+        "power_status": null,
+        "is_auto|1": [true, false]
+      }
+    ]
+  }

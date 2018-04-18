@@ -1,0 +1,27 @@
+{
+  "message": "",
+  "result": {
+    "register_state": {
+      "error": 0,
+      "success": 1
+    },
+    "config_pwd": "oe1234",
+    "Interval": 5000,
+    "client_order": 323,
+    "Begin_order": 1,
+    "relogin": 0,
+    "Mq_connected": 1,
+    "Refresh_order_id": 100,
+    "is_need_upgrate": 0,
+    "End_order": 0,
+    "_neet_show_nw": 0,
+    "gui_upgrate": 0,
+    "Net_card_connected": 1,
+    "oss_auto_switch": 1,
+    "oss_status": 1,
+    "oss_auto_switch_seconds": 10,
+    "vm_action": 0,
+    "vm_action_args": {}
+  },
+  "code": 0
+}

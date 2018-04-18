@@ -1,0 +1,8 @@
+{
+    "method": "beginOrder",
+    "data": {
+        "start_number": 2,
+        "hostname_prefix": "PC",
+        "hostname_suffix": "go"
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "message":"",
+    "result":{
+        "mode_countdown":5,
+        "waittime":5,
+        "final_mode":2,
+        "desktop-mode": 0
+    },
+    "code":0
+}

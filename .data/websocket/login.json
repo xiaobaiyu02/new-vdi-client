@@ -1,0 +1,19 @@
+{
+    "code": 0,
+    "data|1-1": [
+      {
+        "host": null,
+        "id|1-100": 1,
+        "display_name": "@cword(5, 16)",
+        "power_status": "",
+        "mode_id": "",
+        "image": {
+          "id": 2,
+          "os_type": "Windows 7"
+        },
+        "host_uuid": "abcd-fefa-aaef",
+        "host_ip": "192.168.1.100",
+        "instance_uuid": "abcd-fefa-aaef"
+      }
+    ]
+  }

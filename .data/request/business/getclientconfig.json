@@ -1,0 +1,76 @@
+{
+	"code": 0,
+	"result": {
+		"console": {
+			"console_ip": "172.16.201.188",
+			"console_port": 8585,
+			"registered": 0
+		},
+		"desktop_mode": {
+			"desktop_mode": 0,
+			"final_mode": 1,
+			"mode_countdown": 5,
+			"wait_time": 5
+		},
+		"resolution": {
+			"current_resolution": "1440x900",
+			"support_resolution": [
+				"800x600",
+				"2560x1600",
+				"1920x1440",
+				"1856x1392",
+				"1792x1344",
+				"1920x1200",
+				"1600x1200",
+				"1680x1050",
+				"1400x1050",
+				"1280x1024",
+				"1440x900",
+				"1280x960",
+				"1360x768",
+				"1280x800",
+				"1152x864",
+				"1280x768",
+				"1024x768",
+				"640x480"
+			]
+		},
+		"editable_resolution": 1,
+		"network": {
+			"address": "172.16.143.45",
+			"mask": "255.255.0.0",
+			"gateway": "172.16.0.1",
+			"dns1": "202.103.24.68",
+			"dns2": "114.114.114.114",
+			"network_device_name": "eth0",
+			"network_device_list": [
+				"eth0"
+			],
+			"net_type": 0,
+			"interface_type": 0
+		},
+		"self_service": "11",
+		"init_pwd": "vdiadmin",
+		"mode1_shutdown_with_pc": 1,
+		"mode1_shutdown_with_client": 1,
+		"mode2_shutdown_with_pc": 0,
+		"mode2_shutdown_with_client": 1,
+		"enabled_multiple": 0,
+		"client_type": 0,
+		"linux": {
+			"oss_status": 1,
+			"auto_switch": 0,
+			"auto_switch_seconds": 10,
+			"shortcutKey": 1
+		},
+		"windows": {
+			"fullscreen": 1,
+			"auto_start": 1,
+			"connect_type": "rdp",
+			"auto_exit": 1,
+			"win_wait_time": 1,
+			"shortcutKey": 0,
+			"disk_share_to_desktop": 1
+		}
+	}
+}

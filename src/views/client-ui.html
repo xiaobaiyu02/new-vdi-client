@@ -1,0 +1,106 @@
+<div class="client-ui" :class="{offline: !online, ready: ready}" :style="{width:screenScale[0]['width'],height:screenScale[0]['height']}">
+    <div class="logo">
+        <img :src="oem.logo"/>
+    </div>
+    <mixed-mode
+        v-if="currentView === 'mixed-mode'"
+        :online="online"
+        :suspend="hasModalOpened()"
+        :version="version"
+        @modechange="onModeChange"
+        @alert="onAlert"
+    />
+    <teaching-mode
+        v-else-if="currentView === 'teaching-mode'"
+        :sceneList="online ? sceneList : []"
+        :online="online"
+        :suspend="hasModalOpened()"
+        @alert="onAlert"
+        @modechange="onModeChange"
+        @connect="onConnect"
+        @getScenes="onGetSceneList"
+    />
+    <personal-mode
+        v-else-if="currentView === 'personal-mode'"
+        :personalItems="online ? personalItems : []"
+        :online="online"
+        :suspend="hasModalOpened()"
+        @alert="onAlert"
+        @modechange="onModeChange"
+        @connect="onConnect"
+    />
+    <personal-login-mode
+        v-else-if="currentView === 'personal-login-mode'"
+        @alert="onAlert"
+        @modechange="onModeChange"
+        @userlogin="onUserLogin"
+        @updateuser="onUpdateUser"
+        @connect="onConnect"
+    />
+    <!-- 各个端对按钮的支持情况： -->
+    <!-- linux: 设置 关机 重启 -->
+    <!-- android: 文件浏览 设置 关机 重启 -->
+    <!-- windows 分几种情况，根据 windows_mode 来判断 -->
+    <!--   windows_mode === 0: 设置 -->
+    <!--   windows_mode === 1: 设置 退出 关机 重启 -->
+    <!--   windows_mode === 2: 设置 退出（需密码验证） 关机 重启 -->
+    <div class="toolbar text-right">
+        <a v-if="isAndroid" @click="openExplorer">
+            <i class="icon icon-arm-pan"></i> {{ _("文件浏览") }}
+        </a>
+        <a @click="showSettingConfirmModal = true">
+            <i class="icon icon-arm-set"></i> {{ _("设置") }}
+        </a>
+        <a @click="exit" v-if="isWindows ? windowsMode !== 0 && windowsType !== 999 : false">
+            <i class="icon icon-arm-tuichu2"></i> {{ _("退出") }}
+        </a>
+        <a @click="showShutdownConfirmModal = true" v-if="isWindows ? windowsMode !== 0 : true">
+            <i class="icon icon-arm-shutdown"></i> {{ _("关机") }}
+        </a>
+        <a @click="showRebootConfirmModal = true" v-if="isWindows ? windowsMode !== 0 : true">
+            <i class="icon icon-arm-restart"></i> {{ _("重启") }}
+        </a>
+    </div>
+    <div class="text-center error-message">{{ ready ? (online ? error : (offlineError || _("连接服务器失败"))) : "" }}</div>
+    <div class="client-info">
+        <div v-if="currentView !== 'personal-mode' && currentView !== 'personal-login-mode'" class="client-info">
+            <span>{{ _("终端名称/登录序号") }}</span>
+            {{ clientName + "/" + (clientOrder === 0 ? "" : clientOrder) }}
+        </div>
+    </div>
+    <!-- 设置 -->
+    <setting-confirm-modal v-if="showSettingConfirmModal" @confirm="onConfirm($event, 'showSettingConfirmModal')"/>
+    <settings-modal v-if="showSettingDialog" @close="showSettingDialog = false"/>
+    <!-- 关机 -->
+    <shutdown-confirm-modal v-if="showShutdownConfirmModal" @confirm="onConfirm($event, 'showShutdownConfirmModal')"/>
+    <!-- 退出 -->
+    <exit-confirm-modal v-if="showExitConfirmModal" @confirm="onConfirm($event, 'showExitConfirmModal')"/>
+    <!-- 退出需要输入密码 -->
+    <exit-password-confirm-modal v-if="showExitPasswordConfirmModal" @confirm="onConfirm($event, 'showExitPasswordConfirmModal')"/>
+    <!-- 重启 -->
+    <reboot-confirm-modal v-if="showRebootConfirmModal" @confirm="onConfirm($event, 'showRebootConfirmModal')"/>
+    <!-- 升级确认 -->
+    <upgrade-confirm-modal v-if="showUpgradeModal" @confirm="onConfirm($event, 'showUpgradeModal')"/>
+    <!-- 正在升级 -->
+    <upgrading-modal v-if="showResourceUpgradingModal" upgradeType="resource"/>
+    <upgrading-modal v-if="showLowlevelUpgradingModal" upgradeType="lowlevel"/>
+    <!-- 断网提示 -->
+    <offline-alert-modal
+        v-if="!online && isLinux && showOfflineAlertModal"
+        :seconds="offlineAlertWaitTime"
+        @close="showOfflineAlertModal = false"/>
+    <!-- 排序 -->
+    <sort-order-modal v-if="showSortOrderModal" :floatOrder="floatOrder" :clientOrder="clientOrder" @sortOrder="onSortOrder" @close="showSortOrderModal = false"/>
+    <notify-ui v-if="notifyText" :message="notifyText"/>
+    <!-- loading -->
+    <div class="loading-backdrop" v-if="loading">
+        <ul class="loading-wrapper clearfix">
+            <li :class="{active: animidx === 1}"></li>
+            <li :class="{active: animidx === 2}"></li>
+            <li :class="{active: animidx === 3}"></li>
+            <li :class="{active: animidx === 4}"></li>
+            <li :class="{active: animidx === 5}"></li>
+            <li :class="{active: animidx === 6}"></li>
+        </ul>
+    </div>
+</div>

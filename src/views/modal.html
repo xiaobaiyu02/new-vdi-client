@@ -1,0 +1,21 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" :class="dialogCls" role="document">
+        <div class="modal-content">
+            <slot name="header">
+                <div class="modal-header clearfix">
+                    <button type="button" class="close" @click="close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">{{ title }}</h4>
+                </div>
+            </slot>
+            <div class="modal-body">
+                <slot></slot>
+            </div>
+            <slot name="footer">
+                <div class="modal-footer">
+                    <button v-show="okText.length > 0" type="button" class="btn btn-primary" @click="ok">{{ okText }}</button>
+                    <button v-show="cancelText.length > 0" type="button" class="btn btn-default" @click="cancel">{{ cancelText }}</button>
+                </div>
+            </slot>
+        </div>
+    </div>
+</div>

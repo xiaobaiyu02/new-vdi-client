@@ -1,0 +1,23 @@
+<div class="mixed-mode">
+    <div class="block-buttons">
+        <a @click="showTeachingView" class="teaching-block">
+            <i class="icon icon-arm-teaching"></i>
+            <span>
+                <span class="text-main">{{ _("终端教学桌面") }}</span>
+                <span class="text-secondary">Teaching desktop</span>
+            </span>
+        </a>
+        <div style="width: 1rem;"></div>
+        <a @click="showPersonalView" class="personal-block">
+            <i class="icon icon-arm-personal"></i>
+            <span>
+                <span class="text-main">{{ _("终端个人桌面") }}</span>
+                <span class="text-secondary">Personal desktop</span>
+            </span>
+        </a>
+    </div>
+    
+    <div class="copyright bar text-left">
+        {{ _("COPYRIGHT") }} {{ version }}
+    </div>
+</div>

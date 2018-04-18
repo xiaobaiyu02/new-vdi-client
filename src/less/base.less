@@ -1,0 +1,219 @@
+/*   这个文件结构如下：
+        1. 基准字体设置
+        2. css reset
+        3. 共享变量
+        4. 初始化页面样式变量
+        5. 客户端页面样式变量
+        6. 其它共享样式
+        7. 当前页面样式
+        8. OEM 定制代码（为 OEM 写样式的时候优先在这里写）
+*/
+
+/* ======= 1. 基准字体设置 ======= */
+@media screen and (max-height: 600px) {
+    html {font-size: 50%;}
+}
+@media screen and (min-height: 601px) {
+    html {font-size: 56.3%;}
+}
+@media screen and (min-height: 768px) {
+    html {font-size: 62.5%;}
+}
+@media screen and (min-height: 900px) {
+    html {font-size: 68.8%;}
+}
+@media screen and (min-height: 1024px) {
+    html {font-size: 68.8%;}
+}
+@media screen and (min-height: 1080px) {
+    html {font-size: 75%;}
+}
+@media screen and (min-height: 1200px) {
+    html {font-size: 100%;}
+}
+@media screen and (min-height: 1440px) {
+    html {font-size: 120%;}
+}
+@media screen and (min-height: 1600px) {
+    html {font-size: 140%;}
+}
+
+/* ======= 2. css reset ======= */
+* {user-select: none;}
+a, button, input, textarea, select {outline: none !important;}
+html, body { width: 100%; height: 100%; }
+a {cursor: pointer; text-decoration: none;}
+a:hover {text-decoration: none;}
+
+/* ======= 3. 共享变量 ======= */
+@primaryBtnColor: #FFF;
+@primaryBtnBg: #28a2d9;
+@primaryBtnActiveBg: #2491c2;
+
+@defaultBtnColor: #000;
+@defaultBtnBg: #f2f2f2;
+@defaultBtnActiveBg: #e6e6e6;
+
+@invalidInputBg: rgb(255, 217, 217);
+@disabledInputBg: #cacaca;
+
+/* ======= 4. 初始化页面样式变量 ======= */
+/* 主背景色 */
+@initBodyBackground: -webkit-linear-gradient(top,#004a8b,#30b2e7);
+/* 默认字体颜色 */
+@initDefaultColor: rgba(255,255,255,0.7);
+/* 默认按钮文字颜色 */
+@initBtnDefaultColor: #FFF;
+/* 默认按钮背景颜色 */
+@initBtnDefaultBg: #01dc98;
+/* 默认按钮 :hover, :focus, :active 等背景颜色 */
+@initBtnDefaultActiveBg: #05cf90;
+/* 初始化页面底部页面按钮样式 */
+@initBottomBtnColor: #FFF;
+@initBottomBtnActiveColor: #FFF;
+@initBottomBtnBg: transparent;
+@initBottomBtnActiveBg: #0091ce;
+/* 初始化页面右侧面板样式 */
+@initPanelShadowColor: #000;
+@initPanelBg: #7dc9e1;
+
+/* ======= 5. 客户端页面样式变量 ======= */
+@mainbg: -webkit-linear-gradient(top, #004a8b, #0b61ab);
+@teachingBlockBg: #d9c42d;
+@teachingBlockHoverBg: #e7d340;
+@personalBlockBg: #5da832;
+@personalBlockHoverBg: #68b83a;
+@barBg: #36b3e9;
+@barColor: #FFF;
+@userLoginBg: #7dc9e1;
+@settingsHeaderColor: #FFF; /* .setting-header color */
+@settingsHeaderBg: #58b4d1; /* .setting-header 背景色 */
+@settingsHeaderBorderColor: @userLoginBg; /* .setting-header border 颜色 */
+@settingsHeaderActiveBg: @userLoginBg; /* .setting-header 下面激活项的 border 颜色 */
+@settingsBodyBg: @settingsHeaderActiveBg;
+@sortOrderBorderColor: #FFF;
+@sortOrderHeaderBorderColor: #69e1c6;
+@sortOrderBg: #22d2ab;
+@sortOrderColor: #FFF;
+@notifyColor: #FFF; /* 通知消息颜色 */
+@notifyBg: rgba(0, 0, 0, 0); /* 通知消息背景色 */
+
+/* ======= 6. 其它共享样式 ======= */
+/* modal 样式 */
+.modal {transition: opacity ease-in .5s;}
+.modal.opened {
+    display: block;
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+.modal .modal-dialog {
+    top: 0;
+}
+.modal.opened .modal-dialog {
+    top: 50%;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+/* 输入框样式 */
+.invalid-input .form-control {background-color: @invalidInputBg !important;}
+.invalid-input .ip-wrapper input {background-color: @invalidInputBg !important;}
+.disabled-input .form-control {background-color: @disabledInputBg !important; cursor: not-allowed; box-shadow: none;}
+.disabled-input .ip-wrapper input {background-color: @disabledInputBg !important; cursor: not-allowed;}
+/* ip 框样式 */
+.ip-wrapper {
+    width: 100%;
+    background-color: #FFF;
+    border-radius: 3px;
+    display: flex; flex-direction: row; align-content: stretch;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+.ip-wrapper > input {width: 23%;padding: 2px;text-align: center; display: inline-block;border-width: 0;font-size: 14px;line-height: 1rem;}
+.ip-wrapper > span {color: #666;padding-top: 3px;}
+/* ip 框焦点 */
+.ip-wrapper.focus {
+    border-color: #66afe9;
+    outline: 0;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
+}
+.input-sm {padding-top: 4px;padding-bottom: 4px;font-size: 14px;}
+/* btn 按钮样式 */
+.btn {border-width: 0;}
+.btn-default {
+    color: @defaultBtnColor;
+    background-color: @defaultBtnBg;
+    &:hover,&:active,&:focus {
+        background-color: @defaultBtnActiveBg;
+    }
+}
+.btn-primary {
+    color: @primaryBtnColor;
+    background-color: @primaryBtnBg;
+    &:hover,&:active,&:focus {
+        background-color: @primaryBtnActiveBg;
+    }
+}
+/* .control-label 大屏上显示上下错位，先这样强制居中 */
+@media (min-width: 768px) {
+    .form-horizontal .control-label {height: 30px; line-height: 30px;padding-top: 0;}
+}
+/* checkbox, radio 样式（和管理台保持一致） */
+.checkbox label, .radio label {padding-left: 0 !important;}/* 覆盖 bootstrap 默认样式 */
+.checkbox input[type="checkbox"], .radio input[type="radio"] {
+    visibility: hidden;
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    z-index: 20;
+    margin: 0;
+}
+
+.checkbox input[type=checkbox][disabled], .radio input[type=radio][disabled] {
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+.checkbox input[type=checkbox][disabled]:hover + span:before, .radio input[type=radio][disabled]:hover + span:before {
+    border-color: #bfbfbf;
+}
+
+.checkbox input[type=checkbox]:hover + span:before, .radio input[type=radio]:hover + span:before {
+    border-color: #5D98CC;
+}
+
+.checkbox input[type=checkbox] + span:before, .radio input[type=radio] + span:before {
+    font-family: 'icomoon';
+    content: "\a0";
+    border: 1px solid #bfbfbf;
+    font-size: 1.4rem;
+    background-color: #f4f4f4;
+    display: inline-block;
+    height: 1.4rem;
+    width: 1.4rem;
+    line-height: 1.55rem;
+    font-weight: 400;
+    box-sizing: content-box;
+    margin-right: 4px;
+    text-align: center;
+}
+
+.checkbox input[type=checkbox] + span:before {
+    border-radius: 0;
+}
+
+.radio input[type=radio] + span:before {
+    border-radius: 50%;
+}
+
+.checkbox input[type=checkbox] + span:hover, .radio input[type=radio] + span:hover {
+    cursor: pointer;
+}
+
+.checkbox input[type=checkbox]:checked + span:before, .radio input[type=radio]:checked + span:before {
+    content: "\e614";
+    color: #14507f;
+}
+/* ======= 7. 当前页面样式 ======= */

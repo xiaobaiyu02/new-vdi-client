@@ -1,0 +1,63 @@
+<div class="settings-pane system-info">
+    <!-- 系统信息包含：系统属性，桌面属性。后面考虑两个模板分离 -->
+    <!-- windows 端只有桌面属性 -->
+    <ul class="tab-switcher" v-if="!isWindows"><!-- windows 端不显示 -->
+        <li v-if="!isWindows" :class="{active: currentView === 1}" @click="currentView = 1">{{ _("系统属性") }}</li>
+        <li :class="{active: currentView === 2}" @click="currentView = 2">{{ _("桌面属性") }}</li>
+    </ul>
+    <div v-if="!isWindows" class="form-horizontal" v-show="currentView === 1">
+        <table class="info-table">
+            <tbody>
+                <tr><td>{{ _("产品名称") }}</td><td>{{ _("ABOUT_NAME") }}</td></tr>
+                <tr><td>{{ _("版本号") }}</td><td>{{ version }}</td></tr>
+                <tr><td>{{ _("硬盘容量") }}</td><td>{{ disk_size }}M</td></tr>
+                <tr><td>{{ _("内存容量") }}</td><td>{{ memory_size }}M</td></tr>
+                <tr><td>{{ _("CPU信息") }}</td><td>{{ cpu_info }}</td></tr>
+                <tr><td>{{ _("MAC地址") }}</td><td>{{ mac }}</td></tr>
+                <tr><td></td>
+                    <td>
+                        <button class="btn btn-default" @click="showUpgradeModal = true">{{ _("系统更新") }}</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="form-horizontal" v-show="currentView === 2">
+        <div class="vcenter-wrapper">
+            <div class="form-group">
+                <label class="control-label col-xs-5">{{ _("分辨率") }}</label>
+                <div class="col-xs-4">
+                    <select class="form-control" v-model="resolution">
+                        <option v-for="item in resolutions" :value="item.value">{{ item.text }}</option>
+                    </select>
+                </div>
+                <div class="col-xs-3">
+                    <button class="btn btn-default" :disabled="!isResolutionChange" @click="showSaveResolutionModal = true">{{ _("保存") }}</button>
+                </div>
+            </div>
+            <p class="error-message text-center">{{ resolutionError }}</p>
+            <div class="form-group" v-if="isWindows">
+                <label class="control-label col-xs-5">{{ _("Hyper-V桌面连接方式") }}</label>
+                <div class="col-xs-4">
+                    <div class="radio">
+                        <label class="radio-inline">
+                            <input type="radio" name="rdp" value="1" v-model="rdpType"/>
+                            <span>RDP</span>
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="rdp" value="0" v-model="rdpType"/>
+                            <span>VMConnect</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <button class="btn btn-default" :disabled="!isRdpChange" @click="saveRdp">{{ _("保存") }}</button>
+                </div>
+            </div>
+            <p class="error-message text-center" v-if="isWindows">{{ rdpTypeError }}</p>
+        </div>
+        
+    </div>
+    <resolution-modal v-if="showSaveResolutionModal" @confirm="onResolutionConfirm"/>
+    <upgrade-modal v-if="showUpgradeModal" :error="upgradeError" @confirm="onUpgradeConfirm"/>
+</div>

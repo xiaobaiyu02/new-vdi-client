@@ -1,0 +1,4 @@
+bin/*
+src/js/vue.js
+src/js/vue.min.js
+tests/*

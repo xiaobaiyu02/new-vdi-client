@@ -1,0 +1,42 @@
+<div class="sort-container">
+    <div class="sort-header">
+        {{ _("终端排序") }}
+        <p class="pull-right tip">
+            {{ _("您的终端序号为") }}
+            {{ clientOrder === 0 ? "" : clientOrder }}
+            &nbsp;&nbsp;&nbsp;&nbsp;IP:
+            {{ clientIp }}
+        </p>
+    </div>
+    <div class="sort-body" v-if="currentView === 1">
+        <div class="radio-options">
+            <div class="radio">
+                <label>
+                    <input type="radio" name="method" value="auto" v-model="sortMethod"/>
+                    <span>{{ _("序列号自动加1") }}</span>
+                </label>
+            </div>
+            <div class="radio" :class="{'invalid-input':sortMethod === 'manual'&&dirty ? !isOrderValid():false}">
+                <label>
+                    <input type="radio" name="method" value="manual" v-model="sortMethod"/>
+                    <span>{{ _("手动输入") }}</span>
+                </label>
+                <input class="form-control" type="text" v-number="'1-1000'" minlength="1" maxlength="4" :disabled="sortMethod === 'auto'" v-model="manualOrder" @input="checkValid"/>
+            </div>
+        </div>
+        <p class="error-message" :style="{}">{{ error }}</p>
+        <div class="btns">
+            <button class="btn-sort btn" @click="close">{{ _("取消") }}</button>
+            <button class="btn-sort btn" :disabled="!isValid()" @click="sort">{{ _("确定") }}</button>
+        </div>
+    </div>
+    <div class="sort-body sort-body2" v-if="currentView === 2">
+        <p class="topmsg">{{ _("client.sort-success") + _("client.client-order-msg") }}</p>
+        <p class="ordermsg" :style="fontStyle">{{ finalOrder }}</p>
+        <div class="btns">
+            <button class="btn-sort btn" @click="currentView = 1">{{ _("返回") }}</button>
+            <button class="btn-sort btn" @click="close">{{ _("确定") }}</button>
+        </div>
+    </div>
+    <force-set-order-modal v-if="showForceSetOrderModal" @ok="onForceSetOrder(true)" @cancel="onForceSetOrder(false)"/>
+</div>

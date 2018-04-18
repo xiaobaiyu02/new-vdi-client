@@ -1,0 +1,6 @@
+{
+    "code": 999999,
+    "data": {
+        "msg": "websocket 收到的消息没有 method 字段"
+    }
+}

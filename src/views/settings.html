@@ -1,0 +1,32 @@
+<div class="settings">
+    <!-- 设置组件的模板，后面考虑拆分成更细的单元 -->
+    <!-- 下面列出每个端具有的功能，+有 -没有 *部分 -->
+    <!-- windows(client_type === 2): -->
+    <!--   + settings-server-addr-config -->
+    <!--   - settings-network-config -->
+    <!--   * settings-system-info -->
+    <!-- windows(client_type === 999): -->
+    <!--   + settings-server-addr-config -->
+    <!--   + settings-network-config -->
+    <!--   * settings-system-info -->
+    <!-- linux: -->
+    <!--   + settings-server-addr-config -->
+    <!--   + settings-network-config -->
+    <!--   + settings-system-info -->
+    <!-- android: -->
+    <!--   + settings-server-addr-config -->
+    <!--   + settings-network-config -->
+    <!--   + settings-system-info -->
+    <div class="settings-header">
+        <ul>
+            <li @click="showView(1)" :class="{active: currentView === 1}"><i class="icon icon-arm-host"></i><span>{{ _("服务器地址") }}</span></li>
+            <li v-if="clientType !== 2" @click="showView(2)" :class="{active: currentView === 2}"><i class="icon icon-arm-network"></i><span>{{ _("NET") }}</span></li>
+            <li @click="showView(3)" :class="{active: currentView === 3}"><i class="icon icon-arm-win8"></i><span>{{ _("系统") }}</span></li>
+        </ul>
+    </div>
+    <div class="settings-body">
+        <server-address-config v-show="currentView === 1" :show="currentView === 1"/>
+        <network-config v-if="clientType !== 2" v-show="currentView === 2" :show="currentView === 2"/>
+        <system-info v-show="currentView === 3" :show="currentView === 3"/>
+    </div>
+</div>

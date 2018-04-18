@@ -1,0 +1,6 @@
+{
+    "method": "changeName",
+    "data": {
+        "name": "终端名称"
+    }
+}

@@ -1,0 +1,124 @@
+<div class="initial-ui" @click="resetCurrentPanel">
+<div class="lang-btns">
+	<button :class="{selected: langId === 0}" class="btn btn-default btn-xs" @click.stop="setLanguage(0)">简体中文</button>
+	<button :class="{selected: langId === 1}" class="btn btn-default btn-xs" @click.stop="setLanguage(1)">繁體中文</button>
+	<button :class="{selected: langId === 2}" class="btn btn-default btn-xs" @click.stop="setLanguage(2)">English</button>
+</div>
+<div class="init-content">
+	<h3>{{ _("can't connect server") }}</h3>
+	<p>{{ _("maybe error reasons") }}</p>
+	<ul>
+		<li>
+			<span>{{ _("init reason 1") }}</span>
+			<button @click.stop="showSetPanel" class="btn btn-info">{{ _("button set") }}</button>
+		</li>
+		<li>
+			<span>{{ _("init reason 2") }}</span>
+			<button @click.stop="showPingPanel" class="btn btn-info">ping</button>
+		</li>
+		<li>
+			<span>{{ _("init reason 3") }}</span>
+			<button @click.stop="showUpgradePanel" class="btn btn-info">{{ _("button upgrade") }}</button>
+		</li>
+	</ul>
+</div>
+<div class="bottom-tools">
+	<div class="version pull-right">
+		<span>{{ _("version") }}</span>
+		<span class="w100">{{ version }}</span>
+	</div>
+	<div class="text-left">
+		<button class="btn btn-default" @click.stop="shutdown"><i class="icon icon-arm-shutdown"></i> {{ _("shutdown") }}</button>
+		<button class="btn btn-default" @click.stop="restart"><i class="icon icon-arm-restart"></i> {{ _("restart") }}</button>
+	</div>
+</div>
+<!-- set panel -->
+<div v-show="currentPanel === 0" :class="{active: currentPanel === 0}" class="option-panel" @click.stop="noop">
+	<h4>{{ _("Server Setting") }}</h4>
+	<bs-ip-input v-model="server_ip" :labelText="_('Server address')"/>
+	<bs-port-input v-model="server_port" :labelText="_('Server port')"/>
+	
+	<h4>{{ _("Local network") }}</h4>
+	<bs-slot-input :labelText="_('type')">
+		<bs-interface-type v-model="interfaceType" :labelText="_('type')"/>
+	</bs-slot-input>
+	<template v-if="interfaceType == '0'"><!-- 有线网络 -->
+		<bs-slot-input v-if="isLinux || devices.length > 1" :labelText="_('Local network')">
+			<select class="form-control" v-model="device">
+				<option v-for='name in devices' :value='name'>{{name}}</option>
+			</select>
+		</bs-slot-input>
+		<bs-connect-method v-model="connectMethod" :labelText="_('Networking')"/>
+		<bs-ip-input v-model="address" :disabled="connectMethod != '0'" :labelText="_('IP address')"/>
+		<bs-ip-input v-model="mask" :disabled="connectMethod != '0'" :labelText="_('Subnet mask')"/>
+		<bs-optional-ip-input v-model="gateway" :disabled="connectMethod != '0'" :labelText="_('Default gateway')"/>
+		<bs-optional-ip-input v-model="dns1" :disabled="connectMethod != '0'" :labelText="_('Preferred DNS')"/>
+		<bs-optional-ip-input v-model="dns2" :disabled="connectMethod != '0'" :labelText="_('Alternate DNS')"/>
+	</template>
+	<template v-if="interfaceType == '1'"><!-- 无线网络 -->
+		<bs-slot-input :labelText="_('wifi list')">
+			<ul class="wifi-list"></ul>
+		</bs-slot-input>
+		<bs-password-input v-model="wifipassword" :labelText="_('password')"/>
+	</template>
+	
+
+	<h4>{{ _("Password") }}</h4>
+	<bs-password-input v-model="password" :labelText="_('password')"/>
+
+	<div class="option-panel-footer">
+		<p class="error-message">{{ extractError(error) }}</p>
+		<button class="btn btn-primary" :disabled="!isSettingsValid()" @click="saveSettings">{{ _('save') }}</button>
+		<button class="btn btn-default" @click="resetSettings">{{ _('reset') }}</button>
+	</div>
+</div>
+<!--  ping panel -->
+<div v-show="currentPanel === 1" :class="{active: currentPanel === 1}" class="option-panel" @click.stop="noop">
+	<h4>PING</h4>
+	<bs-ping-input v-model="pingAddress" :labelText="_('Address')"/>
+	<div class="ping-options">
+		<div class="checkbox">
+			<label class="checkbox-inline">
+				<input type="checkbox" v-model="pingForever" :disabled="pinging" checked>
+				<span>{{ _("Continue to send ping packets") }}</span>
+			</label>
+		</div>
+
+		<label :class="{'invalid-input': !lt1k(pingCount)}">
+			<span class="pull-left mr5">{{ _("Ping packet number ") }}</span>
+			<input type="text" name="count" v-number="'1-1000'" maxlength="4" v-model="pingCount" :disabled="pinging || pingForever" class="form-control pull-left clearfix" placeholder="1~1000" />
+		</label>
+	</div>
+	<div class="text-left">
+		<button class="btn btn-sm btn-primary" :disabled="pinging || !isIP(pingAddress) || !lt1k(pingCount)" @click="startPing">{{ _('start') }}</button>
+		<button class="btn btn-sm btn-default" :disabled="!pinging" @click="endPing">{{ _('cancel') }}</button>
+	</div>
+	<div class="ping-result">
+		<textarea :value="pingResult" readonly></textarea>
+	</div>
+</div>
+<!-- upgrade modal -->
+<upgrade-modal v-if="showUpgrade" @open="initModal" @close="showUpgrade = false; closeModal();">
+	<p v-if="upgradeCode > -1">{{ _(upgradeMessages[upgradeCode]) }}</p>
+	<div class="radio" v-for="item in upgradeList">
+		<label :class="{disabled: !item.isUpdate}">
+			<input type="radio" v-model="upgradeFile" :value="item.path" name="upgrade_file" :disabled="!item.isUpdate" :checked="item.checked"/>
+			<span>{{ item.path }}</span>
+		</label>
+	</div>
+	<div class="modal-footer" slot="footer">
+		<button type="button" class="btn btn-info" :disabled="!canUpgrade()" @click="doUpgrade">{{ _("Start update") }}</button>
+	</div>
+</upgrade-modal>
+
+<div class="loading-backdrop" v-if="loading">
+	<ul class="loading-wrapper clearfix">
+		<li :class="{active: animidx === 1}"></li>
+		<li :class="{active: animidx === 2}"></li>
+		<li :class="{active: animidx === 3}"></li>
+		<li :class="{active: animidx === 4}"></li>
+		<li :class="{active: animidx === 5}"></li>
+		<li :class="{active: animidx === 6}"></li>
+	</ul>
+</div>
+</div>

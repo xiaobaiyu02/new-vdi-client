@@ -1,0 +1,23 @@
+{
+	"message": "",
+	"result": {
+		"vms": [],
+		"modes": [{
+			"id": 143,
+			"order": 99999,
+			"status": "alive",
+			"is_auto": false,
+			"os_type": "Windows7_64",
+			"name": "Rony-Clf"
+		}, {
+			"id": 144,
+			"order": 99999,
+			"status": "alive",
+			"is_auto": false,
+			"os_type": "Windows7_64",
+			"name": "Rony-xfreerdp"
+		}],
+		"client_trace": 322936
+	},
+	"code": 0
+}

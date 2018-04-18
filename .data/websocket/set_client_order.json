@@ -1,0 +1,6 @@
+{
+    "method": "set_client_order",
+    "data": {
+        "order": 10
+    }
+}

@@ -1,0 +1,36 @@
+<div class="teaching-mode">
+    <div class="bar text-center">
+        <button v-if="showGoBack" class="go-back" @click="goback">
+            <i class="icon icon-arm-left"></i>
+        </button>
+        <span>{{ _("请选择教学桌面") }}</span>
+    </div>
+    <div class="content">
+        <div class="scene-list-v">
+            <div class="scene-list-h">
+                <div class="scene-item" v-for="item in row1Items">
+                    <a class="wrapper" @click="connect(item)">
+                        <img :src="item.icon"/>
+                        <span class="item-title">
+                            <span class="scene-name" :title="item.display_name">{{item.display_name}}</span>
+                            <span class="scene-os">{{item.image.os_type}}</span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+            <div class="scene-list-h">
+                <div class="scene-item" v-for="item in row2Items">
+                    <a class="wrapper" @click="connect(item)">
+                        <img :src="item.icon"/>
+                        <span class="item-title">
+                            <span class="scene-name" :title="item.display_name">{{item.display_name}}</span>
+                            <span class="scene-os">{{item.image.os_type}}</span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <a class="prev-page icon-arm-back" @click="prevPage" v-if="currentPage > 1"></a>
+        <a class="next-page icon-arm-Next" @click="nextPage" v-if="currentPage < pageCount"></a>
+    </div>
+</div>

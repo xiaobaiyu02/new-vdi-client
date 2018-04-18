@@ -1,0 +1,14 @@
+{
+  "code": 0,
+  "result": [
+    {
+      "SSID": "oseasy",
+      "NicDescription": 80
+    },
+    {
+      "SSID": "oseasy5g",
+      "NicDescription": 80
+    }
+  ],
+  "message": ""
+}

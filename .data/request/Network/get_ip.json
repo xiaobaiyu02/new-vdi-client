@@ -1,0 +1,15 @@
+{
+	"code":	0,
+	"result":	{
+		"net-type":	1,
+		"interface-type":	0,
+		"network_device_list":	["eth0"],
+		"network_device_name":	"eth0",
+		"address":	"172.16.122.117",
+		"mask":	"255.255.0.0",
+		"gateway":	"172.16.0.1",
+		"dns1":	"202.103.24.68",
+		"dns2":	""
+	},
+	"message":	""
+}

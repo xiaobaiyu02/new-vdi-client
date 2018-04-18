@@ -1,0 +1,33 @@
+@mainbg: #FFF;
+@teachingBlockBg: #16a4e0;
+@teachingBlockHoverBg: #119ad4;
+@personalBlockBg: #0ebfca;
+@personalBlockHoverBg: #0cb4be;
+@barBg: #0096d6;
+/* 覆盖样式 */
+.client-ui {
+    .mixed-mode {
+        .block-buttons {
+            .teaching-block, .personal-block {
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                .icon {display: none;}
+            }
+            .teaching-block {
+                background-image: url(../img/teaching.svg);
+            }
+            .personal-block {
+                background-image: url(../img/personal.svg);
+            }
+        }
+    }
+    .toolbar{
+        & > a {
+            color: #33abde;
+        }
+        & > a:hover {
+            color: #3395bf;
+        }
+    }
+    .client-info {color: #33abde;}
+}

@@ -1,0 +1,15 @@
+{
+    "message": "",
+    "result": {
+        "disk_size": 6434,
+        "memory_size": 1073,
+        "cpu_info": "ARMv7 Processor rev 0 (v7l) ",
+        "mac": "6C:FE:BB:58:8C:12",
+        "oem_md5": "d33ddaaaaaaaaaa33222",
+        "type": "android_client",
+        "version_code": 146,
+        "version": "4.4.0-146-9221d31",
+        "hostname": "zhangyao"
+    },
+    "code": 0
+}

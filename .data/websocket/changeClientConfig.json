@@ -1,0 +1,26 @@
+{
+    "method": "changeClientConfig",
+    "data": {
+        "config": {
+            "desktop_mode": "",
+            "mode_countdown": "",
+            "final_mode": "",
+            "wait_time": "",
+            "resolution": "",
+            "editable_resolution": "",
+            "need_passwd": "",
+            "auto_start": "",
+            "shortcutKey": "",
+            "server_ip": "",
+            "fullscreen": "",
+            "shutdown_with_vm": "",
+            "self_service": "",
+            "is_auto_exit_when_off": "",
+            "win_wait_time": "",
+            "connect_type": "",
+            "disk_share_to_desktop": "",
+            "auto_switch": "",
+            "auto_switch_seconds": ""
+        }
+    }
+}
